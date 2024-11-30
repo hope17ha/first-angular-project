@@ -1,0 +1,42 @@
+<main>
+  <!-- @if (isLoading) {
+    <app-loader />
+    }@else { -->
+  <div class="tattoo-title">
+    @for (tattoo of tattoos; track $index) {
+    <div class="tattoo-container">
+      <div class="tattoo-name-wrapper">
+        <div class="tattoo-name">
+          <a [routerLink]="tattoo._id" class="normal">
+            <h2>{{ tattoo.type }}</h2>
+            <img src="{{ tattoo.img }}" />
+          </a>
+          <div class="columns">
+            <div>
+              <p class="description">{{ tattoo.description }}</p>
+              <p>
+                Date: <time>{{ tattoo._createdOn }}</time>
+              </p>
+              <div class="nick-name">
+                <p>
+                  Username: <span>{{ tattoo.ownerName }}</span>
+                </p>
+              </div>
+              <div class="comments">
+                <a href="#">Comments</a>
+              </div>
+            </div>
+            <div class="subscribers">
+              <!-- <button class="subscribe">Subscribe</button> -->
+              <p>
+                <!-- Subscribers: <span>{{ tattoo?.subscribers?.length || 0 }}</span> -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  <!-- } -->
+</main>

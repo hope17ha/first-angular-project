@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+/*
+*Removes all default whitespace
+*/
+
+* {
+    padding: 0;
+    margin: 0;
+  }
+  
+  /*
+  *Reset CSS model sizing calculations
+  */
+  
+  html {
+    box-sizing: border-box;
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+header {
+    font-family: "Sofia", sans-serif;
+    
+    text-shadow: 3px 3px 3px #ababab;
+  }
+
+  body {
+    background-image: url('./images/1406.jpg');
+    height: 500px; 
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; 
+  }
