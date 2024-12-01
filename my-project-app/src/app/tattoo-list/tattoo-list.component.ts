@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 
-// import { LoaderComponent } from '../../shared/loader/loader.component';
+
 import { RouterLink } from '@angular/router';
 import { Tattoo } from '../types/tattoo';
 import { ApiService } from '../api.service';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-tattoo-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, LoaderComponent],
   templateUrl: './tattoo-list.component.html',
   styleUrl: './tattoo-list.component.css',
 })
@@ -24,7 +25,7 @@ export class TattooListComponent implements OnInit {
       this.tattoos = tattoos;
       
       
-      // this.isLoading = false;
+      this.isLoading = false;
     });
   }
 }

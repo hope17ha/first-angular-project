@@ -1,1 +1,9 @@
-<p>main works!</p>
+@if (isLoggedIn) {
+    <div class="container">
+      <app-tattoo-list />
+      
+    </div>
+    } @else {
+    <app-home />
+    }
+    

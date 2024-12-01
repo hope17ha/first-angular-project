@@ -1,7 +1,7 @@
 <main>
-  <!-- @if (isLoading) {
+  @if (isLoading) {
     <app-loader />
-    }@else { -->
+    }@else {
   <div class="tattoo-title">
     @for (tattoo of tattoos; track $index) {
     <div class="tattoo-container">
@@ -22,9 +22,8 @@
                   Username: <span>{{ tattoo.ownerName }}</span>
                 </p>
               </div>
-              <div class="comments">
-                <a href="#">Comments</a>
-              </div>
+              <a [routerLink]="tattoo._id" class="more-info-btn">More info</a>
+             
             </div>
             <div class="subscribers">
               <!-- <button class="subscribe">Subscribe</button> -->
@@ -38,5 +37,5 @@
     </div>
     }
   </div>
-  <!-- } -->
+  }
 </main>

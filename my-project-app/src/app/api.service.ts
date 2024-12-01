@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { environment } from './environments/environment.development';
+
 import { Tattoo } from './types/tattoo';
-import { Comment } from './types/comment';
-import { environment } from '../environments/environment.development';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -12,17 +12,25 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getTattoos() {
-    const { apiUrl } = environment;
-    return this.http.get<Tattoo[]>(`${apiUrl}/tattoos/`);
+
+    return this.http.get<Tattoo[]>(`/api/data/tattoos`);
   }
 
-  getComments(id:string) {
-    const { apiUrl } = environment;
-    return this.http.get<Comment[]>(`${apiUrl}/commentTattoos/${id}`);
-  }
+
 
   getSingleTattoo(id: string) {
-    const { apiUrl } = environment;
-    return this.http.get<Tattoo>(`${apiUrl}/tattoos/${id}`);
+
+
+    return this.http.get<Tattoo>(`/api/data/tattoos/${id}`);
   }
+
+  createTattoo(tattooName: string, descriptionText: string, imgUrl: string) {
+
+
+    const payload = { tattooName, descriptionText, imgUrl };
+    return this.http.post<Tattoo>(`/api/data/tattoos`, payload);
+  }
+
+
+
 }

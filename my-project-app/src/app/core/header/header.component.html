@@ -6,19 +6,21 @@
   <div class="mini-navbar-wrap">
     <div class="mini-navbar">
       <ul>
+        @if (isLoggedIn){
         <li class="user-profile-btn">
-          <a routerLink="/profile">User's profile</a>
+          <a routerLink="/profile">{{ username }}'s profile</a>
         </li>
         <li>
-          <a>Logout</a>
+          <a (click)="logout()">Logout</a>
         </li>
-
+        }@else {
         <li>
           <a routerLink="/login">Login</a>
         </li>
         <li>
           <a routerLink="/register">Register</a>
         </li>
+        }
       </ul>
     </div>
   </div>

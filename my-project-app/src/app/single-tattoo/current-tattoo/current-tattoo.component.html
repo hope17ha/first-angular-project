@@ -1,11 +1,11 @@
 <div class="container">
-  <!-- theme content  -->
+  <!-- tattoo content  -->
   <div class="tattoo-content">
-    <!-- theme-title  -->
+    <!-- tattoo-title  -->
 
-    <!-- @if(!isLoggedIn){
+    @if(!isLoggedIn){
     <app-home />
-    } -->
+    }
     <div class="tattoo-title">
       <div class="tattoo-name-wrapper">
         <div class="tattoo-name">
@@ -30,7 +30,7 @@
     <div class="comment">
       <header class="header">
         <p>
-          <span>{{ comment._id }}</span> posted on
+          <span>{{ comment.ownerName }}</span> posted on
           <time>{{ comment._createdOn }}</time>
         </p>
       </header>
@@ -50,11 +50,14 @@
        
       </div>
     </div>
-
-    <!-- } @if(isLoggedIn){ -->
+   
+    }
     <div class="answer-comment">
+      @if (tattoo.comments.length === 0){
+        <p class="first-comment">Be the first one to comment!</p>
+      }
       <p>
-        <span>{{ comment.ownerName }}</span> comment:
+        <span>{{username}}</span> comment:
       </p>
       <div class="answer">
         <form>
@@ -63,6 +66,5 @@
         </form>
       </div>
     </div>
-    }
   </div>
 </div>

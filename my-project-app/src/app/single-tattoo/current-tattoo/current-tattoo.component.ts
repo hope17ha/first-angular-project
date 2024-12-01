@@ -3,7 +3,7 @@ import { Tattoo } from '../../types/tattoo';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { HomeComponent } from '../../home/home.component';
-
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-current-tattoo',
@@ -18,20 +18,18 @@ export class CurrentTattooComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    // private userService: UserService
+    private userService: UserService
   ) {}
 
-  // get isLoggedIn(): boolean {
-  //   return this.userService.isLogged;
-  // }
+  get isLoggedIn(): boolean {
+    return this.userService.isLogged;
+  }
 
-  // get firstName(): string {
-  //   return this.userService.user?.firstName || '';
-  // }
+  get username(): string {
+    return this.userService.user?.username || '';
+  }
 
   ngOnInit(): void {
-
-    
     const id = this.route.snapshot.params['tattoId'];
 
     this.apiService.getSingleTattoo(id).subscribe((tattoo) => {

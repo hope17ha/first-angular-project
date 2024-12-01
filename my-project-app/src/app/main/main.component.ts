@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { RouterLink } from '@angular/router';
-// import { ApiService } from '../api.service';
+import { UserService } from '../user.service';
+import { TattooListComponent } from '../tattoo-list/tattoo-list.component';
+import { HomeComponent } from '../home/home.component';
+
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TattooListComponent, HomeComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
-export class MainComponent implements OnInit {
-  // constructor(private apiService: ApiService) {}
+export class MainComponent {
 
-  ngOnInit(): void {
-    // this.apiService.getTattoos().subscribe((t) => {
-    //   console.log(t);
-    // });
+
+  get isLoggedIn(): boolean {
+    return this.userService.isLogged;
   }
+
+  constructor(private userService: UserService) {}
 }

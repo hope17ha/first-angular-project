@@ -1,13 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ApiService } from '../../api.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-tattoo',
   standalone: true,
-  imports: [RouterLink],
+  imports: [FormsModule],
   templateUrl: './add-tattoo.component.html',
-  styleUrl: './add-tattoo.component.css'
+  styleUrl: './add-tattoo.component.css',
 })
 export class AddTattooComponent {
+  constructor(private apiService: ApiService, private router: Router) {}
 
+  addTattoo(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
+    const { tattooName, descriptionText, imgUrl } = form.value;
+   
+    
+
+    this.apiService.createTattoo(tattooName, descriptionText, imgUrl).subscribe(() => {
+      this.router.navigate(['/themes']);
+    });
+  }
 }
