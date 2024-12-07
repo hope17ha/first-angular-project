@@ -17,13 +17,16 @@ export class AddTattooComponent {
     if (form.invalid) {
       return;
     }
-
-    const { tattooName, descriptionText, imgUrl } = form.value;
+    
+    
+   
+    
+    const { ownerName, type, description, img } = form.value;
    
     
 
-    this.apiService.createTattoo(tattooName, descriptionText, imgUrl).subscribe(() => {
-      this.router.navigate(['/themes']);
+    this.apiService.createTattoo(ownerName, type, description, img).subscribe(() => {
+      this.router.navigate(['/tattoos']);
     });
   }
 }

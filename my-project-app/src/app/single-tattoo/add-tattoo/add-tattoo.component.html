@@ -6,72 +6,82 @@
       </div>
       <form #form="ngForm" (ngSubmit)="addTattoo(form)">
         <div class="new-tattoo-title">
-          <label for="tattooName">Title <span class="red">*</span></label>
+          <label for="ownerName">Username <span class="red">*</span></label>
           <input
             type="text"
-            name="tattooName"
-            id="tattooName"
+            name="ownerName"
+            id="ownerName"
             ngModel
-            #inputTattooName="ngModel"
+            #inputOwnerName = "ngModel"
             required
             minlength="5"
           />
-          <label for="imgUrl">Image URL <span class="red">*</span></label>
+          <label for="type">Title <span class="red">*</span></label>
           <input
             type="text"
-            name="imgUrl"
-            id="imgUrl"
+            name="type"
+            id="type"
             ngModel
-            #inputImgUrl="ngModel"
+            #inputType="ngModel"
+            required
+            minlength="5"
+          />
+          <label for="img">Image URL <span class="red">*</span></label>
+          <input
+            type="url"
+            name="img"
+            id="img"
+            ngModel
+            #inputImg="ngModel"
             required
             minlength="5"
           />
   
-          @if(inputTattooName?.touched){
+          @if(inputType?.touched){
           <div>
-            @if(inputTattooName?.errors?.['required']){
+            @if(inputType?.errors?.['required']){
             <p class="error">Tattoo name is required.</p>
             }
             <!---->
-            @if(inputTattooName?.errors?.['minlength']){
+            @if(inputType?.errors?.['minlength']){
             <p class="error">Tattoo name must be at least 5 characters long.</p>
             }
           </div>
           }
         </div>
         <div class="new-tattoo-content">
-          <label for="descriptionText">Description <span class="red">*</span></label>
+          <label for="description">Description <span class="red">*</span></label>
           <textarea
             type="text"
-            name="descriptionText"
-            id="descriptionText"
+            name="description"
+            id="description"
             rows="8"
             class="height"
             ngModel
-            #inputDescriptionText="ngModel"
+            #inputDescription="ngModel"
             required
             minlength="10"
           ></textarea>
 
   
-          @if(inputDescriptionText?.touched){
+          @if(inputDescription?.touched){
           <div>
-            @if(inputDescriptionText?.errors?.['required']){
+            @if(inputDescription?.errors?.['required']){
             <p class="error">The field with your description is required.</p>
             }
             <!---->
-            @if(inputDescriptionText?.errors?.['minlength']){
+            @if(inputDescription?.errors?.['minlength']){
             <p class="error">Post must be at least 10 characters long.</p>
             }
           </div>
         }
-          @if(inputImgUrl?.touched){
+          @if(inputImg?.touched){
             <div>
-              @if(inputImgUrl?.errors?.['required']){
+              @if(inputImg?.errors?.['required']){
               <p class="error">The field with your image URL is required.</p>
               }
               <!---->
-              @if(inputImgUrl?.errors?.['minlength']){
+              @if(inputImg?.errors?.['minlength']){
               <p class="error">Image URL must be at least 10 characters long.</p>
               }
             </div>

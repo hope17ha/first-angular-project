@@ -9,6 +9,7 @@ import { AddTattooComponent } from './single-tattoo/add-tattoo/add-tattoo.compon
 import { ErrorComponent } from './error/error.component';
 import { TattooListComponent } from './tattoo-list/tattoo-list.component';
 import { AuthGuard } from './guards/authentication.guard';
+import { EditTattooComponent } from './single-tattoo/edit-tattoo/edit-tattoo.component';
 
 
 export const routes: Routes = [
@@ -31,6 +32,9 @@ export const routes: Routes = [
           component: CurrentTattooComponent,
           canActivate: [AuthGuard],
         },
+        { path: 'edit/:tattoId',
+      component: EditTattooComponent,
+    canActivate: [AuthGuard]}
  
       ],
     },
@@ -41,6 +45,14 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+
+  // {path: 'edit',
+  // loadComponent: () =>
+  //   import('../app/single-tattoo/edit-tattoo/edit-tattoo.component'). then (
+  //     (c)  => c.EditTattooComponent
+  //     ),
+  //   canActivate: [AuthGuard]
+  // },
 
     // End - Theme routing
   

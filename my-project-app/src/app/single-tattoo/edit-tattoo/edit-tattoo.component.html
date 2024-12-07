@@ -1,0 +1,95 @@
+<!-- homepage -->
+<div class="container">
+    <div class="new-tattoo-border">
+      <div class="header-background">
+        <span>Edit Tattoo</span>
+      </div>
+      <form #editForm="ngForm" (ngSubmit)="edit()">
+        <div class="new-tattoo-title">
+     
+          <label for="type">Title <span class="red">*</span></label>
+          <input
+            type="text"
+            name="type"
+            id="type"
+            ngModel
+            #inputType="ngModel"
+            required
+            minlength="5"
+          />
+          <label for="img">Image URL <span class="red">*</span></label>
+          <input
+            type="url"
+            name="img"
+            id="img"
+            ngModel
+            #inputImg="ngModel"
+            required
+            minlength="5"
+          />
+  
+          @if(inputType?.touched){
+          <div>
+            @if(inputType?.errors?.['required']){
+            <p class="error">Tattoo name is required.</p>
+            }
+            <!---->
+            @if(inputType?.errors?.['minlength']){
+            <p class="error">Tattoo name must be at least 5 characters long.</p>
+            }
+          </div>
+          }
+        </div>
+        <div class="new-tattoo-content">
+          <label for="description">Description <span class="red">*</span></label>
+          <textarea
+            type="text"
+            name="description"
+            id="description"
+            rows="8"
+            class="height"
+            ngModel
+            #inputDescription="ngModel"
+            required
+            minlength="10"
+          ></textarea>
+
+  
+          @if(inputDescription?.touched){
+          <div>
+            @if(inputDescription?.errors?.['required']){
+            <p class="error">The field with your description is required.</p>
+            }
+            <!---->
+            @if(inputDescription?.errors?.['minlength']){
+            <p class="error">Post must be at least 10 characters long.</p>
+            }
+          </div>
+        }
+          @if(inputImg?.touched){
+            <div>
+              @if(inputImg?.errors?.['required']){
+              <p class="error">The field with your image URL is required.</p>
+              }
+              <!---->
+              @if(inputImg?.errors?.['minlength']){
+              <p class="error">Image URL must be at least 10 characters long.</p>
+              }
+            </div>
+          
+          }
+        
+        <div class="new-tattoo-buttons">
+          <button class="cancel">Cancel</button>
+          <button
+            class="public"
+            [disabled]="editForm.invalid"
+            [style]="{ backgroundColor: editForm.invalid ? 'grey' : '#234465' }"
+          >
+            Post
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  

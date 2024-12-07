@@ -3,27 +3,34 @@ import { ProfileDetails, User } from './types/user';
 import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Subscription, tap } from 'rxjs';
+import { Tattoo } from './types/tattoo';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private user$$ = new BehaviorSubject<User | null>(null);
-  user$ = this.user$$.asObservable;
+  user$ = this.user$$.asObservable();
   USER_KEY = '[user]';
 
   user: User | null = null;
+  tattoo: Tattoo | null = null;
   userSubscription: Subscription | null = null;
 
  
 
   get isLogged(): boolean {
     return !!this.user;
+   
 
   }
 
+  get isOwner(): boolean {
+    return this.user?._id === this.tattoo?._ownerId;
+  }
+
   constructor(private http: HttpClient) {
-    this.userSubscription = this.user$$.subscribe((user) => {
+    this.userSubscription = this.user$.subscribe((user) => {
       this.user = user;
     });
   }
@@ -32,6 +39,8 @@ export class UserService {
     return this.http
       .post<User>(`/api/users/login`, { email, password })
       .pipe(tap((user) => this.user$$.next(user)));
+      
+      
   }
 
   register(
@@ -77,6 +86,8 @@ export class UserService {
       })
       .pipe(tap((user) => this.user$$.next(user)));
   }
+
+
 
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();

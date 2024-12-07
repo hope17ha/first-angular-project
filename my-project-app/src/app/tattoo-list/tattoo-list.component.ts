@@ -20,12 +20,18 @@ export class TattooListComponent implements OnInit {
 
   constructor(private apiService: ApiService) {}
 
+
+
   ngOnInit() {
     this.apiService.getTattoos().subscribe((tattoos) => {
       this.tattoos = tattoos;
       
       
       this.isLoading = false;
+
+      
     });
+
+    
   }
 }

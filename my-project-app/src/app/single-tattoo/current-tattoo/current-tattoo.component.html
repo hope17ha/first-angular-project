@@ -3,7 +3,7 @@
   <div class="tattoo-content">
     <!-- tattoo-title  -->
 
-    @if(!isLoggedIn){
+    @if(!isLogged){
     <app-home />
     }
     <div class="tattoo-title">
@@ -14,57 +14,19 @@
             Date: <time>{{ tattoo._createdOn }}</time>
           </p>
         </div>
+        <div class="buttons">
+          @if (isLogged && isOwner) {
+            <button routerLink="/tattoos/edit/{{tattoo._id}}" class="btn btn-edit">Edit</button>
+            <button class="btn btn-del" (click)="delete()">Delete</button>
+          }
+        </div>
         <div class="subscribers">
+          @if (isLogged) {
+          <button class="subscribe" (click)="like()">Like</button>
           <p>
-            <!-- Subscribers: <span>{{ theme.subscribers.length || 0 }}</span> -->
+            Likes: <span> </span>
           </p>
-          <!-- <button class="subscribe">Subscribe</button>
-                    <button class="unsubscribe">Unsubscribe</button> -->
+          }
         </div>
       </div>
     </div>
-
-    <!-- comment  -->
-
-    @for (comment of tattoo.comments; track $index) {
-    <div class="comment">
-      <header class="header">
-        <p>
-          <span>{{ comment.ownerName }}</span> posted on
-          <time>{{ comment._createdOn }}</time>
-        </p>
-      </header>
-      <div class="comment-main">
-        <div class="userdetails">
-          <img src="./profile.png" alt="avatar" />
-        </div>
-        <div class="comment-content">
-          <p>
-            {{ comment.content }}
-          </p>
-        </div>
-      </div>
-      <div class="footer">
-        <!-- <i class="fas fa-thumbs-up"></i>
-                <i class="fas fa-thumbs-down"></i> -->
-       
-      </div>
-    </div>
-   
-    }
-    <div class="answer-comment">
-      @if (tattoo.comments.length === 0){
-        <p class="first-comment">Be the first one to comment!</p>
-      }
-      <p>
-        <span>{{username}}</span> comment:
-      </p>
-      <div class="answer">
-        <form>
-          <textarea name="postText" id="comment" cols="30" rows="10"></textarea>
-          <button>Post</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>

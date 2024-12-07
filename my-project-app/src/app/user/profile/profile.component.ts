@@ -57,16 +57,21 @@ export class ProfileComponent implements OnInit {
     this.isEditMode = !this.isEditMode;
   }
 
-  handleSaveProfile() {
+  get User(): User | null{
+    return this.userService.user;
+  }
+  saveProfile() {
     if (this.form.invalid) {
       return;
     }
 
     this.profileDetails = this.form.value as ProfileDetails;
+    console.log(this.profileDetails)
 
     const { username, email, tel } = this.profileDetails;
 
     this.userService.updateProfile(username, email, tel).subscribe(() => {
+      this.userService.user = this.form.value as User;
       this.toggleEditMode();
     });
   }
