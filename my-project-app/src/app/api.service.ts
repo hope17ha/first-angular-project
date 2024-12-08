@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 
 import { Tattoo } from './types/tattoo';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -33,26 +32,25 @@ export class ApiService {
     return this.http.delete(`/api/data/tattoos/${id}`);
   }
 
-  updateTattoo(tattoId: string, type: string, img: string, description: string) {
-    const payload = {type, img, description};
-    return this.http.put<Tattoo>(
-      `/api/data/tattoos/${tattoId}`,
-      payload
-    );
+  updateTattoo(
+    tattoId: string,
+    type: string,
+    img: string,
+    description: string
+  ) {
+    const payload = { type, img, description };
+    return this.http.put<Tattoo>(`/api/data/tattoos/${tattoId}`, payload);
   }
 
   likeTattoo<Tattoo>(tattoId: string) {
-
-    const payload = {tattoId}
-    return this.http.post<Tattoo>(`/api/data/likes`, payload)
-      
+    const payload = { tattoId };
+    
+    return this.http.post<Tattoo>(`/api/data/likes`, payload);
   }
 
-  getLikesOnTattoo<Tattoo>(tattoId: string){
-    return this.http.get<Tattoo>(`/api/data/likes?where=tattooId%3D%22${tattoId}%22&distinct=_ownerId&count`)
+  getLikesOnTattoo(tattoId: string) {
+    return this.http.get<Tattoo>(
+      `/api/data/likes?where=tattoId%3D"${tattoId}"`
+    );
   }
-
- 
 }
-
-

@@ -3,10 +3,12 @@ import { ApiService } from '../../api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { ImageUrlValidationDirective } from '../../directives/image-validation.directive';
+
 @Component({
   selector: 'app-add-tattoo',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ImageUrlValidationDirective],
   templateUrl: './add-tattoo.component.html',
   styleUrl: './add-tattoo.component.css',
 })

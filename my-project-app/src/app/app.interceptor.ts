@@ -2,8 +2,9 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs';
-import { ErrorMsgService } from './error/err-message.service';
+import { catchError, throwError } from 'rxjs';
+
+import { ErrorMessagesService } from './error-messages/error-messages.service';
 
 const API = '/api';
 const { apiUrl } = environment;
@@ -24,20 +25,20 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  const errorMessage = inject(ErrorMsgService);
+  const errorService = inject(ErrorMessagesService);
   const router = inject(Router);
 
-  return next(req).pipe(
+  return next(req)
+  .pipe(
     catchError((err) => {
       if (err.status === 401) {
-        localStorage.removeItem('X-Authorization');
-      } else if (err.status === 403) {
-        localStorage.removeItem('X-Authorization');
+        router.navigate(['/login']);
       } else {
-        errorMessage.setError(err);
-        router.navigate(['/404']);
+        errorService.setError(err);
+        router.navigate(['/error']);
       }
-      return [err];
+
+      return throwError(() => err);
     })
   );
 };

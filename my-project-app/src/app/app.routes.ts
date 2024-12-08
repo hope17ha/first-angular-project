@@ -10,6 +10,7 @@ import { ErrorComponent } from './error/error.component';
 import { TattooListComponent } from './tattoo-list/tattoo-list.component';
 import { AuthGuard } from './guards/authentication.guard';
 import { EditTattooComponent } from './single-tattoo/edit-tattoo/edit-tattoo.component';
+import { ErrorMessagesComponent } from './error-messages/error-messages.component';
 
 
 export const routes: Routes = [
@@ -46,16 +47,10 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  // {path: 'edit',
-  // loadComponent: () =>
-  //   import('../app/single-tattoo/edit-tattoo/edit-tattoo.component'). then (
-  //     (c)  => c.EditTattooComponent
-  //     ),
-  //   canActivate: [AuthGuard]
-  // },
-
-    // End - Theme routing
   
+    // End - Theme routing
+
+    { path: 'error', component: ErrorMessagesComponent },
     { path: '404', component: ErrorComponent },
     { path: '**', redirectTo: '/404' },
   ];

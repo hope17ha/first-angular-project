@@ -5,11 +5,12 @@ import { ApiService } from '../../api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Tattoo } from '../../types/tattoo';
+import { ImageUrlValidationDirective } from '../../directives/image-validation.directive';
 
 @Component({
   selector: 'app-edit-tattoo',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ImageUrlValidationDirective],
   templateUrl: './edit-tattoo.component.html',
   styleUrl: './edit-tattoo.component.css',
 })

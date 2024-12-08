@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { Route, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../user.service';
+import { emailValidator } from '../../utils/email.validator';
+import { DOMAINS } from '../../constant';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +30,7 @@ export class RegisterComponent {
         Validators.required,
         Validators.minLength(5),
       ]),
-      rePassword: new FormControl('', [Validators.required]),
+      rePassword: new FormControl('', [Validators.required, emailValidator(DOMAINS)]),
     }),
   });
 

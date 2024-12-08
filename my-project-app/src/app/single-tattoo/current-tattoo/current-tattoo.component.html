@@ -21,11 +21,14 @@
           }
         </div>
         <div class="subscribers">
-          @if (isLogged) {
+          @if (isLogged && !isTattooLikedByUser) {
           <button class="subscribe" (click)="like()">Like</button>
-          <p>
-            Likes: <span> </span>
-          </p>
+        }
+        <p>
+          Likes: <span>{{getLikes.length}}</span>
+        </p>
+          @if(isTattooLikedByUser){
+            <p>You have liked this fragrance.</p>
           }
         </div>
       </div>

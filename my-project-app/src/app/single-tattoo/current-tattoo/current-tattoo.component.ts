@@ -45,7 +45,7 @@ export class CurrentTattooComponent implements OnInit {
 
         if (this.userService.isLogged) {
           this.isOwner = this.tattoo._ownerId === this.userService.user?._id;
-          this.isTattooLikedByUser = this.tattoo.likedList.includes(this.userService.user!._id) || false;
+          this.isTattooLikedByUser = this.tattoo.likes.includes(this.userService.user!._id) || false;
         }
       });
 
@@ -60,14 +60,20 @@ export class CurrentTattooComponent implements OnInit {
     });
   }
 
-  // getLikes() {
-  //   const id = this.route.snapshot.params['tattoId'];
-  //   this.apiService.getLikesOnTattoo(id).subscribe();
-  // }
-
-  like() {
+  getLikes() {
     const id = this.route.snapshot.params['tattoId'];
-    this.apiService.likeTattoo(id).subscribe();
-    // this.isLikedByUser = true;
+    return this.apiService.getLikesOnTattoo(id).subscribe();
+      
+    }
+    
+    like() {
+      const id = this.route.snapshot.params['tattoId'];
+      this.apiService.likeTattoo(id).subscribe();
+      this.tattoo.likes.push(this.userService.user?._id!)
+      
+      this.isTattooLikedByUser = true;
+    }
+    
   }
-}
+
+

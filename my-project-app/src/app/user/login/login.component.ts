@@ -3,16 +3,20 @@ import { Router, RouterLink } from '@angular/router';
 
 import { UserService } from '../../user.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { DOMAINS } from '../../constant';
+import { EmailDirective } from '../../directives/email-validation.directive';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, EmailDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   errorMsg: string | null = null;
+  domains = DOMAINS;
+  
   constructor(private userService: UserService, private router: Router) {}
 
   login(form: NgForm) {

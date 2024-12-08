@@ -9,6 +9,8 @@ import {
 // import { DOMAINS } from '../../constants';
 import {ProfileDetails, User } from '../../types/user';
 import { UserService } from '../../user.service';
+import { DOMAINS } from '../../constant';
+import { emailValidator } from '../../utils/email.validator';
 
 
 @Component({
@@ -35,7 +37,7 @@ export class ProfileComponent implements OnInit {
     ]),
     email: new FormControl('', [
       Validators.required,
-      // emailValidator(DOMAINS)
+      emailValidator(DOMAINS)
     ]),
     tel: new FormControl(''),
   });
