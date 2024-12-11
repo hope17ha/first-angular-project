@@ -1,150 +1,158 @@
 <!-- homepage -->
 <div class="container">
-    <form class="register" [formGroup]="form" (ngSubmit)="register()">
+    <form class="register" form #registerForm="ngForm" (ngSubmit)="register()">
       <fieldset>
         <h2>Registration Form</h2>
   
         <!-- username -->
         <p class="field field-icon">
-          <label for="username">
-            <span><i class="fas fa-user"></i></span>
-          </label>
+          <label for="username">Username</label>
           <input
-            [class]="
-              isFieldTextMissing('username') || isNotMinLength
-                ? 'input-error'
-                : ''
-            "
             type="text"
-            name="username"
             id="username"
-            placeholder="Johny"
-            formControlName="username"
+            name="username"
+            #inputUsername="ngModel"
+            ngModel
+            required
+
           />
-        </p>
-  
-        @if(form.get('username')?.touched){
-        <div>
-          @if(form.get('username')?.errors?.['required']){
-          <p class="error">Username is required!</p>
+        
+    
+        @if(inputUsername?.touched) {
+    
+          @if(inputUsername?.errors?.['required']){
+            
+            <div class="error">
+              <p>Name is required.</p>
+            </div>
+            }
           }
-          <!--  -->
-          @if(form.get('username')?.errors?.['minlength']){
-          <p class="error">Username must be at least 5 characters!</p>
-          }
-        </div>
-        }
   
         <!-- email -->
         <p class="field field-icon">
-          <label for="email"
-            ><span><i class="fas fa-envelope"></i></span
-          ></label>
-          <input
-            [class]="
-              isFieldTextMissing('email') || isEmailNotValid ? 'input-error' : ''
-            "
-            type="email"
-            name="email"
-            id="email"
-            placeholder="john.doe@gmail.com"
-            formControlName="email"
-          />
-        </p>
-  
-        @if(form.get('email')?.touched){
-        <div>
-          @if(form.get('email')?.errors?.['required']){
-          <p class="error">Email is required!</p>
-          }
-          <!--  -->
-          @if(form.get('email')?.errors?.['emailValidator']){
-          <p class="error">Email is not valid!</p>
-          }
+          <label for="email">Email</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        email
+        #inputEmail="ngModel"
+        ngModel
+        required
+        [appEmail]="domains"
+      />
+    
+
+    @if(inputEmail?.touched) {
+
+      @if(inputEmail?.errors?.['required']){
+        
+        <div class="error">
+          <p>Email is required.</p>
         </div>
         }
-        <!-- telephone -->
-        <p class="field field-icon">
-          <label for="tel"
-            ><span><i class="fas fa-phone"></i></span
-          ></label>
-          <select name="select-tel" id="select-tel" class="tel">
-            <option value="00359">+359</option>
-          </select>
-          <input
-            type="text"
-            name="tel"
-            id="tel"
-            placeholder="885 888 888"
-            formControlName="tel"
-          />
-        </p>
-  
+   
+      @if(inputEmail?.errors?.['emailValidator']){
+        
+        <div class="error">
+          <p>Email is invalid!</p>
+        </div>
+        }
+    }
+          <!-- phone -->
+    <p class="field field-icon">
+      <label for="tel">Phone</label>
+      <input
+        type="text"
+        id="tel"
+        name="tel"
+        #inputTel="ngModel"
+        ngModel
+        required
+
+      />
+    
+
+    @if(inputTel?.touched) {
+
+      @if(inputTel?.errors?.['required']){
+        
+        <div class="error">
+          <p>Phone is required.</p>
+        </div>
+        }
+      }
+        
+            <!--passwords--> 
         <div formGroupName="passGroup">
           <!-- password -->
           <p class="field field-icon">
-            <label for="password"
-              ><span><i class="fas fa-lock"></i></span
-            ></label>
+            <label for="password">Password</label>
             <input
-              [class]="(
-                (passGroup?.get('password')?.touched &&
-                 passGroup?.get('password')?.errors?.['required'] ) ||
-                 (passGroup?.get('password')?.touched && 
-                 passGroup?.get('password')?.errors?.['minlength'])
-              ) ? 'input-error' : ''"
               type="password"
-              name="password"
               id="password"
-              placeholder="******"
-              formControlName="password"
+              name="password"
+              #passwordInput="ngModel"
+              ngModel
+              required
+              minlength="5"
             />
-          </p>
-  
-          @if(passGroup?.get('password')?.touched){
-          <div>
-            @if(passGroup?.get('password')?.errors?.['required']){
-            <p class="error">Password is required!</p>
-            }
-            <!--  -->
-            @if(passGroup?.get('password')?.errors?.['minlength']){
-            <p class="error">Password must be at least 5 characters!</p>
-            }
           </div>
-          }
+      
+          @if(passwordInput?.touched) {
+      
+            @if(passwordInput?.errors?.['required']){
+              
+              <div class="error">
+                <p>Password is required.</p>
+              </div>
+              }
+            @if(passwordInput?.errors?.['minlength']){
+              
+              <div class="error">
+                <p>Password must be at least 5 characters.</p>
+              </div>
+              }
+            }
   
           <!-- rePassword -->
           <p class="field field-icon">
-            <label for="rePassword"
-              ><span><i class="fas fa-lock"></i></span
-            ></label>
+            <label for="rePassword">Confirm Password</label>
             <input
-              [class]="(
-                (passGroup?.get('rePassword')?.touched &&
-                (passGroup?.get('rePassword')?.errors?.['required'] ||
-                passGroup?.errors?.['matchPasswordsValidator'])) 
-              ) ? 'input-error' : ''"
               type="password"
-              name="rePassword"
               id="rePassword"
-              placeholder="******"
-              formControlName="rePassword"
+              name="rePassword"
+              #rePasswordInput="ngModel"
+              ngModel
+              required
+              minlength="5"
             />
-          </p>
-  
-          @if(passGroup?.get('rePassword')?.touched){
-          <div>
-            @if(passGroup?.errors?.['matchPasswordsValidator'] ||
-            passGroup?.get('rePassword')?.errors?.['required']){
-            <p class="error">Repeat Password does not match password!</p>
+          
+      
+          @if(rePasswordInput?.touched) {
+      
+            @if(rePasswordInput?.errors?.['required']){
+              
+              <div class="error">
+                <p>Confirm Password is required.</p>
+              </div>
+              }
             }
-          </div>
-          }
-        </div>
+      
+             @if (passwordInput.touched && rePasswordInput.touched) {
+      
+               @if (passwordsDontMatch) {
+                 <div class="error">
+                   <p>Passwords don't match!</p>
+                  </div>
+                }
+              }
+          
+
   
         <button
-          [disabled]="form.invalid"
-          [style]="{ backgroundColor: form.invalid ? 'grey' : '#234465' }"
+          [disabled]="registerForm.invalid"
+          [style]="{ backgroundColor: registerForm.invalid ? 'grey' : '#234465' }"
         >
           Create Account
         </button>

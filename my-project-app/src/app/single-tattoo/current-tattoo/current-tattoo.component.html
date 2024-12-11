@@ -16,20 +16,28 @@
         </div>
         <div class="buttons">
           @if (isLogged && isOwner) {
-            <button routerLink="/tattoos/edit/{{tattoo._id}}" class="btn btn-edit">Edit</button>
-            <button class="btn btn-del" (click)="delete()">Delete</button>
+          <button
+            routerLink="/tattoos/edit/{{ tattoo._id }}"
+            class="btn btn-edit"
+          >
+            Edit
+          </button>
+          <button class="btn btn-del" (click)="delete()">Delete</button>
           }
         </div>
         <div class="subscribers">
           @if (isLogged && !isTattooLikedByUser) {
-          <button class="subscribe" (click)="like()">Like</button>
-        }
-        <p>
-          Likes: <span>{{getLikes.length}}</span>
-        </p>
-          @if(isTattooLikedByUser){
-            <p>You have liked this fragrance.</p>
+          <button class="subscribe" (click)="like(tattoo._id)">Like</button>
           }
+          <p>
+            @if(isTattooLikedByUser){
+              <p>You have liked this tattoo.</p>
+              }
+            Likes: <span>{{this.likes}}</span>
+          </p>
+        
         </div>
       </div>
     </div>
+  </div>
+</div>

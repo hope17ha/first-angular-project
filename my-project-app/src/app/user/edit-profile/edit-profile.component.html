@@ -1,0 +1,97 @@
+<!-- EDIT MODE -->
+    <ng-container>
+      <form #editForm="ngForm" (ngSubmit)="saveProfile()">
+        <div class="flex">
+          
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              ngModel
+              #inputUserame="ngModel"
+              required
+
+            />
+          </div>
+  
+          @if(inputUserame?.touched) {
+  
+            @if(inputUserame?.errors?.['required']){
+              
+              <div class="error">
+                <p>Username is required.</p>
+              </div>
+              }
+        
+        
+          }
+          
+          <div class="flex">
+            <label for="email">Email:</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              email
+              #inputEmail="ngModel"
+
+              ngModel
+              required
+              [appEmail]="domains"
+            />
+          </div>
+          @if(inputEmail?.touched) {
+  
+            @if(inputEmail?.errors?.['required']){
+              
+              <div class="error">
+                <p>Email is required.</p>
+              </div>
+              }
+          
+            @if(inputEmail?.errors?.['emailValidator']){
+              
+              <div class="error">
+                <p>Email is invalid!</p>
+              </div>
+              }
+              
+          }
+<div class="flex">
+          <label for="tel">Phone</label>
+      <input
+        type="text"
+        id="tel"
+        name="tel"
+        #inputTel="ngModel"
+        ngModel
+        required
+
+      />
+    
+
+    @if(inputTel?.touched) {
+
+      @if(inputTel?.errors?.['required']){
+        
+        <div class="error">
+          <p>Phone is required.</p>
+        </div>
+        }
+      }
+    </div>
+        
+        <div class="btn-wrapper">
+          <button class="red-button" (click)="onCancel($event)">Cancel</button>
+          <button
+            class="green-button"
+            [disabled]="editForm.invalid"
+            [style]="{ backgroundColor: editForm.invalid ? 'grey' : '#5cb85c' }"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </ng-container>
+    

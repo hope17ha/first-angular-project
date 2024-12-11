@@ -5,6 +5,7 @@ import { ApiService } from '../../api.service';
 import { HomeComponent } from '../../home/home.component';
 import { UserService } from '../../user.service';
 
+
 @Component({
   selector: 'app-current-tattoo',
   standalone: true,
@@ -15,6 +16,7 @@ import { UserService } from '../../user.service';
 export class CurrentTattooComponent implements OnInit {
   tattoo = {} as Tattoo;
   comment = {} as Comment;
+  likes = 0;
 
   isOwner: boolean = false;
   isTattooLikedByUser: boolean = false;
@@ -45,12 +47,33 @@ export class CurrentTattooComponent implements OnInit {
 
         if (this.userService.isLogged) {
           this.isOwner = this.tattoo._ownerId === this.userService.user?._id;
-          this.isTattooLikedByUser = this.tattoo.likes.includes(this.userService.user!._id) || false;
+          
         }
       });
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+      
+      this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
+        this.likes = Object.keys(likes).length;
+      });
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    }
+
+  like(id: string) {
+    this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
+      const isTattooLikedByUser = Object.values(likes).some(like => like._ownerId === this.userService.user?._id);
+      if (isTattooLikedByUser) {
+        return;
+      } else {
+        this.apiService.likeTattoo(id).subscribe(() => {
+          this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
+            this.likes = Object.keys(likes).length;
+          });
+        })
+      }
+    })
   }
+  
+
 
   delete() {
     const id = this.route.snapshot.params['tattoId'];
@@ -60,19 +83,6 @@ export class CurrentTattooComponent implements OnInit {
     });
   }
 
-  getLikes() {
-    const id = this.route.snapshot.params['tattoId'];
-    return this.apiService.getLikesOnTattoo(id).subscribe();
-      
-    }
-    
-    like() {
-      const id = this.route.snapshot.params['tattoId'];
-      this.apiService.likeTattoo(id).subscribe();
-      this.tattoo.likes.push(this.userService.user?._id!)
-      
-      this.isTattooLikedByUser = true;
-    }
     
   }
 

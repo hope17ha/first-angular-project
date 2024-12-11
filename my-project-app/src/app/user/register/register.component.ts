@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
+  EmailValidator,
   FormControl,
   FormGroup,
+  FormsModule,
+  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -10,75 +13,50 @@ import { UserService } from '../../user.service';
 import { emailValidator } from '../../utils/email.validator';
 import { DOMAINS } from '../../constant';
 
+
+import { EmailDirective } from '../../directives/email-validation.directive';
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, EmailDirective],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  form = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-    email: new FormControl(''),
-    tel: new FormControl(''),
-    passGroup: new FormGroup({
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(5),
-      ]),
-      rePassword: new FormControl('', [Validators.required, emailValidator(DOMAINS)]),
-    }),
-  });
+
+  @ViewChild('registerForm') registerForm: NgForm | undefined;
+
+  errorMessage: string | undefined
+
+  domains = DOMAINS;
+
+  get passwordsDontMatch(): boolean {
+    return this.registerForm?.controls['password'].value !== this.registerForm?.controls['rePassword'].value
+  }
+
 
   constructor(private userService: UserService, private router: Router) {}
 
-  isFieldTextMissing(controlName: string) {
-    return (
-      this.form.get(controlName)?.touched &&
-      this.form.get(controlName)?.errors?.['required']
-    );
-  }
+  
 
-  get isNotMinLength() {
-    return (
-      this.form.get('username')?.touched &&
-      this.form.get('username')?.errors?.['minlength']
-    );
-  }
-
-  get isEmailNotValid() {
-    return (
-      this.form.get('email')?.touched &&
-      this.form.get('email')?.errors?.['emailValidator']
-    );
-  }
-
-  get passGroup() {
-    return this.form.get('passGroup');
-  }
+  
 
   register() {
-    if (this.form.invalid) {
-      return;
-    }
-    const {
-      username,
-      email,
-      tel,
-      passGroup: { password, rePassword } = {},
-    } = this.form.value;
+    const { username, email, tel, password, rePassword } = this.registerForm?.form.value;
 
     this.userService
-    .register(username!, email!, tel!, password!, rePassword!)
-    .subscribe((data) => {
+      .register(username, email, tel, password, rePassword)
+      .subscribe({
+        next: (user) => {
+          this.errorMessage = '';
 
-      const token = data.accessToken;
-      localStorage.setItem('X-Authorization', token);
-      this.router.navigate(['/tattoos']);
-    });
-  } 
+          this.router.navigate(['/home']);
+        },
+        error:(err) => {
+          
+          this.errorMessage = err.error?.message
+        }
+      })
+  }
 }

@@ -1,7 +1,7 @@
 export interface User {
     // tattoos: string[];
     _id: string;
-    tel?: string;
+    tel: string;
     email: string;
     username: string;
     password: string;
@@ -13,6 +13,7 @@ export interface User {
 
   
   export interface ProfileDetails {
+    id: string;
     email: string;
     tel: string;
     username: string;

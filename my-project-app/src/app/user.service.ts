@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ProfileDetails, User } from './types/user';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { Tattoo } from './types/tattoo';
 
 @Injectable({
@@ -16,6 +16,7 @@ export class UserService {
   user: User | null = null;
   tattoo: Tattoo | null = null;
   userSubscription: Subscription | null = null;
+  
 
  
 
@@ -29,11 +30,15 @@ export class UserService {
     return this.user?._id === this.tattoo?._ownerId;
   }
 
+ 
+
   constructor(private http: HttpClient) {
     this.userSubscription = this.user$.subscribe((user) => {
       this.user = user;
     });
   }
+
+ 
 
   login(email: string, password: string) {
     return this.http
@@ -77,7 +82,7 @@ export class UserService {
   }
 
 
-  updateProfile(username: string, email: string, tel?: string) {
+  updateProfile(username: string, email: string, tel: string) {
     return this.http
       .put<User>(`/api/users/me`, {
         username,

@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 
 import { Tattoo } from './types/tattoo';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+
+  
   constructor(private http: HttpClient) {}
 
   getTattoos() {
@@ -45,11 +48,12 @@ export class ApiService {
   likeTattoo<Tattoo>(tattoId: string) {
     const payload = { tattoId };
     
+    
     return this.http.post<Tattoo>(`/api/data/likes`, payload);
   }
 
   getLikesOnTattoo(tattoId: string) {
-    return this.http.get<Tattoo>(
+     return this.http.get(
       `/api/data/likes?where=tattoId%3D"${tattoId}"`
     );
   }
