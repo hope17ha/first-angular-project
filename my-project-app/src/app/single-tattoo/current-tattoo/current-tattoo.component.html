@@ -9,11 +9,29 @@
     <div class="tattoo-title">
       <div class="tattoo-name-wrapper">
         <div class="tattoo-name">
-          <h2>{{ tattoo.type }}</h2>
-          <p>
-            Date: <time>{{ tattoo._createdOn }}</time>
-          </p>
-        </div>
+         
+            <h2>{{ tattoo.type }}</h2>
+            <img src="{{ tattoo.img }}" />
+          
+          <div class="columns">
+            <div>
+              <p class="description">{{ tattoo.description }}</p>
+              <p>
+                Date: <time>{{ tattoo._createdOn | elapsedTime }}</time>
+              </p>
+              <div class="nick-name">
+                <p>
+                  Username: <span>{{ tattoo.ownerName }}</span>
+                </p>
+
+              </div>
+              <div class="price">
+                <p>
+                  Price: <span>{{ tattoo.price }}</span>
+                </p>
+
+              </div>
+
         <div class="buttons">
           @if (isLogged && isOwner) {
           <button
@@ -35,6 +53,68 @@
               }
             Likes: <span>{{this.likes}}</span>
           </p>
+
+          @if (comments.length > 0){
+          @for (comment of comments; track $index) {
+            <div class="comment">
+              <header class="header">
+                <p>
+                  <span>{{ comment.username }}</span> posted on
+                  <time>{{ comment._createdOn | elapsedTime }}</time>
+                </p>
+              </header>
+              <div class="comment-main">
+                <div class="userdetails">
+                  <img src="./profile.png" alt="avatar" />
+                </div>
+                <div class="post-content">
+                  <p>
+                    {{ comment.content.comment }}
+                  </p>
+                </div>
+              </div>
+             
+            </div>
+          } 
+        } @else {
+            <div class="no-comment">
+              <p class="comment">Be the first one to comment this tattoo!</p>
+            </div>
+          }
+        
+         @if(isWritingComment){
+            <div class="answer-comment">
+              <p>
+                <span>{{ username }}</span> comment:
+              </p>
+              <div class="answer">
+                <form #form="ngForm" (ngSubmit)="addComment(form)">
+                  <div class="input-container">
+                      <input 
+                          type="text" 
+                          id="comment" 
+                          name="comment"
+                          placeholder="Add your comment here"
+                          ngModel
+                          #inputComment="ngModel"
+                          maxlength="100"
+                          minlength="1"
+                          required
+                          cols="30"
+                          rows="10"
+                          />
+                  </div>
+                  </form>
+                  <button class="post" (click)="addComment(form)">Post</button>
+              </div>
+            </div>
+            }
+            @if (isLogged) {
+              <div class="bts-container">
+                  <button (click)="addCommentToggle()">Add comment</button>
+                  <button type="button" class="cancel" (click)="addCommentToggle()">Cancel</button>
+              </div>
+          }
         
         </div>
       </div>

@@ -33,7 +33,10 @@ export const appInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err) => {
       if (err.status === 401) {
         router.navigate(['/login']);
-      } else {
+      } else if (err.status === 403){
+        localStorage.removeItem('X-Authorization');
+      }
+       else {
         errorService.setError(err);
         router.navigate(['/error']);
       }

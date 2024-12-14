@@ -26,9 +26,9 @@ export class EditTattooComponent {
   ) {}
 
   ngOnInit(): void {
-    const tattoId = this.route.snapshot.params['tattoId'];
+    const tattooId = this.route.snapshot.params['tattooId'];
 
-    this.apiService.getSingleTattoo(tattoId).subscribe((tattoo) => {
+    this.apiService.getSingleTattoo(tattooId).subscribe((tattoo) => {
       this.tattoo = tattoo;
 
       this.editForm?.form.controls['type'].setValue(this.tattoo.type);
@@ -36,16 +36,17 @@ export class EditTattooComponent {
       this.editForm?.form.controls['description'].setValue(
         this.tattoo.description
       );
+      this.editForm?.form.controls['price'].setValue(this.tattoo.price);
     });
   }
 
   edit() {
-    const { type, img, description } = this.editForm?.value;
+    const { type, img, description, price } = this.editForm?.value;
 
-    const tattoId = this.tattoo._id;
+    const tattooId = this.tattoo._id;
 
     this.apiService
-      .updateTattoo(tattoId, type, img, description)
+      .updateTattoo(tattooId, type, img, description, price)
       .subscribe((res) => {
         console.log(res);
         this.router.navigate(['/tattoos']);

@@ -1,65 +1,82 @@
-import { Component, DestroyRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  FormsModule,
-  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-// import { emailValidator } from '../../utils/email.validator';
-// import { DOMAINS } from '../../constants';
-import {ProfileDetails, User } from '../../types/user';
+import { emailValidator } from '../../utils/email.validator';
+
+import { ProfileDetails, User } from '../../types/user';
+import { DOMAINS } from '../../constant';
 import { UserService } from '../../user.service';
-
-
-
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-
+import { EmailDirective } from '../../directives/email-validation.directive';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  @ViewChild('form') editForm: NgForm | undefined;
-
   isEditMode: boolean = false;
-  
-  subscription: Subscription | null = null;
-  
+
   profileDetails: ProfileDetails = {
-    id: '',
+    username: '',
     email: '',
     tel: '',
-    username: '',
   };
-  
-  
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private destroyRef: DestroyRef){}
 
-  
+  form = new FormGroup({
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+    ]),
+    email: new FormControl('', [Validators.required, emailValidator(DOMAINS)]),
+    tel: new FormControl(''),
+  });
+
+  constructor(private userService: UserService) {}
+
   ngOnInit(): void {
+    const { username, email, tel } = this.userService.user!;
+    this.profileDetails = { username, email, tel };
 
-
-    this.subscription = this.userService.getProfile().subscribe((user) => {
-      this.profileDetails = {
-        id: user?._id,
-        username: user?.username,
-        email: user?.email,
-        tel: user?.tel,
-      };
+    this.form.setValue({
+      username,
+      email,
+      tel,
     });
-    this.destroyRef.onDestroy(() => this.subscription?.unsubscribe());
   }
 
-  toggleEdit() {
-        this.isEditMode = !this.isEditMode;
-      }
-    
-}
+  toggleEditMode() {
+    this.isEditMode = !this.isEditMode;
+  }
 
+  get User(): User | null {
+    return this.userService.user;
+  }
+
+  handleSaveProfile() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.profileDetails = this.form.value as ProfileDetails;
+
+    const { username, email, tel } = this.profileDetails;
+
+    this.userService
+      .updateProfile(username, email, tel)
+      .subscribe((response) => {
+        this.userService.user = response;
+        this.toggleEditMode();
+      });
+  }
+
+  onCancel(event: Event) {
+    event.preventDefault();
+    this.toggleEditMode();
+  }
+}

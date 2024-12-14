@@ -74,7 +74,7 @@
                 "_createdOn": 1613551388703
             }
         },
-        "comments": {
+        "commentsRecipes": {
             "0a272c58-b7ea-4e09-a000-7ec988248f66": {
                 "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
                 "content": "Great recipe!",
@@ -195,6 +195,7 @@
                     "type": "The Mad Bunny",
                     "img": "https://www.shutterstock.com/image-vector/vector-tattoo-creepy-bunny-260nw-84109870.jpg",
                     "description": "A quirky and edgy tattoo featuring an animated bunny with a mischievous grin, clutching a knife, blending cuteness with a dark twist.",
+                    "price": "250 BGN",
                     "_createdOn": 1617194210928,
                     "comments": [],
                     "likes": [],
@@ -207,6 +208,7 @@
                     "type": "Japanese Dragon",
                     "img": "https://tattoocrafters.com/wp-content/uploads/2024/01/A-detailed-Japanese-style-dragon-tattoo-design-showcasing-intricate-scales-flowing-whiskers-and-fierce-expressive-eyes.-The-dragon-is-coiled-in-a.png",
                     "description": "A majestic Japanese dragon wrapped in swirling clouds and flames, symbolizing strength, wisdom, and protection.",
+                    "price": "350 BGN",
                     "_createdOn": 1617194295474,
                     "comments": [{
                         "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
@@ -225,6 +227,7 @@
                     "type": "Trash Polka",
                     "img": "https://i.pinimg.com/474x/e5/c0/d3/e5c0d39db32aa5ce62c006c2cb56a006.jpg",
                     "description": "A striking Trash Polka tattoo of a skull, combining bold black and red ink with abstract elements, exuding a sense of rebellion and raw artistry.",
+                    "price": "200 BGN",
                     "_createdOn": 1617194295480,
                     "comments": [],
                     "likes": [],
@@ -232,11 +235,13 @@
                 }
             
         },
-        "commentsTattoo": {
+        "comments": {
             "0a272c58-b7ea-4e09-a000-7ec988248f66": {
                 "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
-                "content": "Great tattoo! I want it too! When can you sign me up?",
                 "tattooId": "136777f5-3277-42ad-b874-76d043b069cb",
+                "content": {
+                    "comment": "Great tattoo! I want it too! When can you sign me up?"
+                },
                 "_createdOn": 1614260681375,
                 "_id": "0a272c58-b7ea-4e09-a000-7ec988248f66"
             }

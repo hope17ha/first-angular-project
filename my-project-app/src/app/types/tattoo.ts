@@ -6,8 +6,9 @@ export interface Tattoo {
   type: string;
   img: string;
   description: string;
-  _createdOn: number;
+  price: string;
+  _createdOn: string;
   likes: string[];
   _id: string;
-  
+  comments: Comment[];
 }

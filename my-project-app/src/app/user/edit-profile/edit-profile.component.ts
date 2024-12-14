@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { EmailDirective } from '../../directives/email-validation.directive';
 import { DOMAINS } from '../../constant';
+import { ProfileDetails } from '../../types/user';
 
 @Component({
   selector: 'app-edit-profile',
@@ -17,6 +18,13 @@ import { DOMAINS } from '../../constant';
 export class EditProfileComponent implements OnInit {
   domains = DOMAINS;
   isEditMode: boolean = false;
+
+  profileDetails: ProfileDetails = {
+   
+    email: '',
+    tel: '',
+    username: '',
+  };
 
   @ViewChild('editForm') editForm: NgForm | undefined;
 
@@ -36,16 +44,25 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveProfile() {
-    const username: string = this.editForm?.controls['username'].value;
-    const email: string = this.editForm?.controls['email'].value;
-    const tel: string = this.editForm?.controls['tel'].value;
+    // const username: string = this.editForm?.controls['username'].value;
+    // const email: string = this.editForm?.controls['email'].value;
+    // const tel: string = this.editForm?.controls['tel'].value;
 
-    this.userService.updateProfile(username, email, tel).subscribe(() => {});
-    this.router.navigate(['/profile']);
-    this.toggleEditMode();
+    this.profileDetails = this.editForm?.value as ProfileDetails;
+
+    const { username, email, tel } = this.profileDetails;
+
+    
+
+    this.userService.updateProfile(username, email, tel).subscribe(() => {
+      this.toggleEditMode();
+     
+      this.router.navigate(['/profile']);
+    });
+
   }
   onCancel(event: Event) {
     event.preventDefault();
-    history.back();
+    this.toggleEditMode();
   }
 }

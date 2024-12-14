@@ -35,7 +35,6 @@
               name="email"
               email
               #inputEmail="ngModel"
-
               ngModel
               required
               [appEmail]="domains"
@@ -58,17 +57,17 @@
               }
               
           }
-<div class="flex">
-          <label for="tel">Phone</label>
-      <input
-        type="text"
-        id="tel"
-        name="tel"
-        #inputTel="ngModel"
-        ngModel
-        required
+        <div class="flex">
+                  <label for="tel">Phone</label>
+              <input
+                type="text"
+                id="tel"
+                name="tel"
+                #inputTel="ngModel"
+                ngModel
+                required
 
-      />
+              />
     
 
     @if(inputTel?.touched) {

@@ -1,25 +1,29 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, NgModule, OnInit } from '@angular/core';
 import { Tattoo } from '../../types/tattoo';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { HomeComponent } from '../../home/home.component';
 import { UserService } from '../../user.service';
-
+import { FormsModule, NgForm } from '@angular/forms';
+import { ElapsedTimePipe } from '../../pipes/elasped-time.pipe';
 
 @Component({
   selector: 'app-current-tattoo',
   standalone: true,
-  imports: [HomeComponent, RouterLink],
+  imports: [HomeComponent, RouterLink, FormsModule, ElapsedTimePipe],
   templateUrl: './current-tattoo.component.html',
   styleUrl: './current-tattoo.component.css',
 })
 export class CurrentTattooComponent implements OnInit {
   tattoo = {} as Tattoo;
-  comment = {} as Comment;
+  comments : any = [];
   likes = 0;
 
   isOwner: boolean = false;
   isTattooLikedByUser: boolean = false;
+  tattooId: string = '';
+  isWritingComment = false;
+
 
   get isLogged(): boolean {
     return this.userService.isLogged;
@@ -38,7 +42,8 @@ export class CurrentTattooComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['tattoId'];
+    const id = this.route.snapshot.params['tattooId'];
+    this.tattooId = id;
 
     const subscription = this.apiService
       .getSingleTattoo(id)
@@ -47,20 +52,30 @@ export class CurrentTattooComponent implements OnInit {
 
         if (this.userService.isLogged) {
           this.isOwner = this.tattoo._ownerId === this.userService.user?._id;
-          
         }
       });
-
       
-      this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
-        this.likes = Object.keys(likes).length;
-      });
-      this.destroyRef.onDestroy(() => subscription.unsubscribe());
-    }
+
+    this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
+      this.likes = Object.keys(likes).length;
+    });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+
+    this.apiService.getCommentsById(this.tattooId).subscribe({
+      next: (comments) => {
+        this.comments = comments;
+      },
+      error: (err) => {
+        console.error('Error loading comments:', err);
+      },
+    });
+  }
 
   like(id: string) {
     this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
-      const isTattooLikedByUser = Object.values(likes).some(like => like._ownerId === this.userService.user?._id);
+      const isTattooLikedByUser = Object.values(likes).some(
+        (like) => like._ownerId === this.userService.user?._id
+      );
       if (isTattooLikedByUser) {
         return;
       } else {
@@ -68,22 +83,47 @@ export class CurrentTattooComponent implements OnInit {
           this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
             this.likes = Object.keys(likes).length;
           });
-        })
+        });
       }
-    })
+    });
   }
-  
-
 
   delete() {
-    const id = this.route.snapshot.params['tattoId'];
+    const id = this.route.snapshot.params['tattooId'];
+
+    const confirmation = confirm(`Do you want to delete this tattoo?`)
+    if (!confirmation) {
+        return;
+    }
 
     this.apiService.deleteTattoo(id).subscribe(() => {
       this.router.navigate(['/tattoos']);
     });
   }
 
-    
+  addCommentToggle() {
+    this.isWritingComment = !this.isWritingComment
   }
 
+  addComment(form: NgForm) {
+  
+    if (form.invalid) {
+      return;
+    }
 
+    const id = this.route.snapshot.params['tattooId'];
+
+    this.apiService.createComment(id, form.value).subscribe(() => {
+     
+      this.apiService.getCommentsById(id).subscribe((comments) => {
+        this.comments = comments;
+      });
+      this.addCommentToggle();
+
+    });
+  }
+
+  
+
+  
+}

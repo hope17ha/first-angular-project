@@ -13,7 +13,7 @@ export interface User {
 
   
   export interface ProfileDetails {
-    id: string;
+    
     email: string;
     tel: string;
     username: string;

@@ -7,6 +7,7 @@ import { Tattoo } from '../types/tattoo';
 import { ApiService } from '../api.service';
 import { LoaderComponent } from '../loader/loader.component';
 
+
 @Component({
   selector: 'app-tattoo-list',
   standalone: true,

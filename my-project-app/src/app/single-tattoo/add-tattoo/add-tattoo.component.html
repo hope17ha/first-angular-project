@@ -37,6 +37,32 @@
             minlength="5"
             appImageValidation
           />
+
+          <label for="price">Price <span class="red">*</span></label>
+          <input
+            type="text"
+            name="price"
+            id="price"
+            ngModel
+            #inputPrice="ngModel"
+            required
+            appPriceValidation
+          
+          />
+          @if(inputPrice?.touched){
+            <div>
+              @if(inputPrice?.errors?.['required']){
+              <p class="error">The field with the price is required.</p>
+              }
+              <!---->
+              @if(inputPrice?.errors?.['priceValidator']){
+                <p class="error">
+                  Price is invalid, must be a BGN currency.
+                </p>
+                }
+           
+            </div>
+          }
   
           @if(inputType?.touched){
           <div>
