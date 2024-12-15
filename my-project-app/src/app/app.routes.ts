@@ -11,7 +11,7 @@ import { TattooListComponent } from './tattoo-list/tattoo-list.component';
 import { guestAuthGuard } from './guards/guest.guard';
 import { EditTattooComponent } from './single-tattoo/edit-tattoo/edit-tattoo.component';
 import { ErrorMessagesComponent } from './error-messages/error-messages.component';
-import { EditProfileComponent } from './user/edit-profile/edit-profile.component';
+
 import { userAuthGuard } from './guards/user.guard';
 
 export const routes: Routes = [
@@ -26,15 +26,11 @@ export const routes: Routes = [
     component: RegisterComponent,
   },
   { path: 'profile', component: ProfileComponent },
-  {
-    path: 'edit-profile',
-    component: EditProfileComponent,
-    canActivate: [guestAuthGuard],
-  },
+
 
   //   End - User routing
 
-  // Start - Theme routing
+  // Start - Tattoo routing
   {
     path: 'tattoos',
     children: [
@@ -60,7 +56,7 @@ export const routes: Routes = [
     canActivate: [guestAuthGuard],
   },
 
-  // End - Theme routing
+  // End - Tattoo routing
 
   { path: 'error', component: ErrorMessagesComponent },
   { path: '404', component: ErrorComponent },

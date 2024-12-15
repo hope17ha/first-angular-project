@@ -10,7 +10,8 @@ import { emailValidator } from '../../utils/email.validator';
 import { ProfileDetails, User } from '../../types/user';
 import { DOMAINS } from '../../constant';
 import { UserService } from '../../user.service';
-import { EmailDirective } from '../../directives/email-validation.directive';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -37,9 +38,11 @@ export class ProfileComponent implements OnInit {
     tel: new FormControl(''),
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
+
+    
     const { username, email, tel } = this.userService.user!;
     this.profileDetails = { username, email, tel };
 
@@ -54,26 +57,24 @@ export class ProfileComponent implements OnInit {
     this.isEditMode = !this.isEditMode;
   }
 
-  get User(): User | null {
-    return this.userService.user;
-  }
-
   handleSaveProfile() {
     if (this.form.invalid) {
       return;
     }
 
     this.profileDetails = this.form.value as ProfileDetails;
+    
 
     const { username, email, tel } = this.profileDetails;
 
-    this.userService
-      .updateProfile(username, email, tel)
-      .subscribe((response) => {
-        this.userService.user = response;
-        this.toggleEditMode();
-      });
+    this.userService.updateProfile(username, email, tel).subscribe(() => {
+      this.userService.user = this.form.value as User;
+      this.toggleEditMode();
+    });
+    this.router.navigate(['/profile'])
   }
+      
+  
 
   onCancel(event: Event) {
     event.preventDefault();

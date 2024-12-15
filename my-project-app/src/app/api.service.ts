@@ -56,17 +56,18 @@ export class ApiService {
   }
 
   getCommentsById(tattooId: string): Observable<Comment[]> {
-    
-    return this.http.get<Comment[]>(`/api/data/comments?where=tattooId%3D"${tattooId}"`)
+    const encodedTattooId = encodeURIComponent(`tattooId="${tattooId}"`);
+    const loadParam = encodeURIComponent('author=_ownerId:users');
+    const url = `/api/data/comments?where=${encodedTattooId}&load=${loadParam}`;
+    return this.http.get<Comment[]>(url);
   }
+
 
   createComment(tattooId: string, content: string): Observable<Comment> {
     return this.http.post<Comment>('/api/data/comments', { tattooId, content });
   }
 
-  updateComment(commentId: string, content: string): Observable<Comment> {
-    return this.http.patch<Comment>(`/api/data/comments/${commentId}`, { content });
-  }
+
 
   deleteComment(commentId: string): Observable<Comment> {
     return this.http.delete<Comment>(`/api/data/comments/${commentId}`)

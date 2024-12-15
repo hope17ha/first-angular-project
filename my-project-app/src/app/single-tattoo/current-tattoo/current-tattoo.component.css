@@ -220,3 +220,7 @@
     min-width: 100%;
   }
   
+  .delete {
+    color: red;
+    background-color: black;
+  }

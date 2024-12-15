@@ -6,6 +6,7 @@ import { HomeComponent } from '../../home/home.component';
 import { UserService } from '../../user.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ElapsedTimePipe } from '../../pipes/elasped-time.pipe';
+import { User } from '../../types/user';
 
 @Component({
   selector: 'app-current-tattoo',
@@ -16,13 +17,14 @@ import { ElapsedTimePipe } from '../../pipes/elasped-time.pipe';
 })
 export class CurrentTattooComponent implements OnInit {
   tattoo = {} as Tattoo;
-  comments : any = [];
+  comments: any = [];
   likes = 0;
+  user : User | null = null;
 
   isOwner: boolean = false;
   isTattooLikedByUser: boolean = false;
   tattooId: string = '';
-  isWritingComment = false;
+  isCreatingComment = false;
 
 
   get isLogged(): boolean {
@@ -45,6 +47,10 @@ export class CurrentTattooComponent implements OnInit {
     const id = this.route.snapshot.params['tattooId'];
     this.tattooId = id;
 
+    const user = this.userService.user$.subscribe((user) => {
+      this.user = user;
+    })
+
     const subscription = this.apiService
       .getSingleTattoo(id)
       .subscribe((tattoo) => {
@@ -54,7 +60,6 @@ export class CurrentTattooComponent implements OnInit {
           this.isOwner = this.tattoo._ownerId === this.userService.user?._id;
         }
       });
-      
 
     this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
       this.likes = Object.keys(likes).length;
@@ -91,9 +96,9 @@ export class CurrentTattooComponent implements OnInit {
   delete() {
     const id = this.route.snapshot.params['tattooId'];
 
-    const confirmation = confirm(`Do you want to delete this tattoo?`)
+    const confirmation = confirm(`Do you want to delete this tattoo?`);
     if (!confirmation) {
-        return;
+      return;
     }
 
     this.apiService.deleteTattoo(id).subscribe(() => {
@@ -102,11 +107,11 @@ export class CurrentTattooComponent implements OnInit {
   }
 
   addCommentToggle() {
-    this.isWritingComment = !this.isWritingComment
+    this.isCreatingComment = !this.isCreatingComment;
   }
 
+
   addComment(form: NgForm) {
-  
     if (form.invalid) {
       return;
     }
@@ -114,16 +119,24 @@ export class CurrentTattooComponent implements OnInit {
     const id = this.route.snapshot.params['tattooId'];
 
     this.apiService.createComment(id, form.value).subscribe(() => {
-     
       this.apiService.getCommentsById(id).subscribe((comments) => {
         this.comments = comments;
       });
       this.addCommentToggle();
-
     });
   }
 
-  
+  deleteComment(commentId: string) {
+    const confirmation = confirm(`Do you want to delete this comment?`)
+    if (!confirmation) {
+        return;
+    }
 
-  
+    this.apiService.deleteComment(commentId).subscribe(() => {
+      this.apiService.getCommentsById(this.tattooId).subscribe((comments) => {
+        this.comments = comments;
+      });
+
+    })
+  }
 }

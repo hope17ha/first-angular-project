@@ -59,10 +59,17 @@
             <div class="comment">
               <header class="header">
                 <p>
-                  <span>{{ comment.username }}</span> posted on
+                  <span>{{ comment.author.username }}</span> posted on
                   <time>{{ comment._createdOn | elapsedTime }}</time>
                 </p>
+
               </header>
+              @if(user?._id === comment._ownerId){
+                <div class="delete">
+
+                    <button type="button" (click)="deleteComment(comment._id)">Delete comment</button>
+                </div>
+            }
               <div class="comment-main">
                 <div class="userdetails">
                   <img src="./profile.png" alt="avatar" />
@@ -82,7 +89,7 @@
             </div>
           }
         
-         @if(isWritingComment){
+         @if(isCreatingComment){
             <div class="answer-comment">
               <p>
                 <span>{{ username }}</span> comment:
@@ -109,6 +116,8 @@
               </div>
             </div>
             }
+          
+  
             @if (isLogged) {
               <div class="bts-container">
                   <button (click)="addCommentToggle()">Add comment</button>

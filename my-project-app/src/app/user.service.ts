@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ProfileDetails, User } from './types/user';
+
 import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { Tattoo } from './types/tattoo';
+import { User } from './types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { Tattoo } from './types/tattoo';
 export class UserService {
   private user$$ = new BehaviorSubject<User | null>(null);
   user$ = this.user$$.asObservable();
-  USER_KEY = '[user]';
+
 
   user: User | null = null;
   tattoo: Tattoo | null = null;
@@ -82,16 +83,15 @@ export class UserService {
   }
 
 
-  updateProfile(username: string, email: string, tel: string) {
+  updateProfile(
+    username: string,
+    email: string,
+    tel: string
+  ): Observable<User> {
     return this.http
-      .put<User>(`/api/users/me`, {
-        username,
-        email,
-        tel,
-      })
+      .put<User>(`/api/users/me`, { username, email, tel })
       .pipe(tap((user) => this.user$$.next(user)));
   }
-
 
 
 
