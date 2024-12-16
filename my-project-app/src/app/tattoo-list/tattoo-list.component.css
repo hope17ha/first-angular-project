@@ -2,9 +2,14 @@
 
 .tattoo-container a {
     text-decoration: none;
-    color: inherit;
+    color: white;
+    margin-left: 150px
   }
-  
+
+.tattoo-container {
+  display: flex;
+  flex: 0 0 30%;
+}
   .tattoo-container span {
     font-weight: bold;
   }
@@ -21,6 +26,11 @@
     color: white;
     text-shadow: 1px 1px rgb(121, 117, 117);
     border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+
   }
   .tattoo-name-wrapper {
     display: flex;
@@ -32,10 +42,18 @@
     font-size: 0.8em;
     margin-top: 1em;
     background-color: rgb(108, 164, 164);
+    border: 2px solid black;
+    width: 420px;
+    border-radius: 10px;
   }
   
   .tattoo-title {
     padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
   
   .tattoo-name {
@@ -50,29 +68,20 @@
     text-shadow: 1px 1px rgb(0, 0, 0);
   }
   
-  .subscribers {
-    text-align: right;
-    flex-basis: 25%;
-  }
-  
-  .subscribers button {
-    padding: 0.2rem 0.5rem;
-    border: none;
-    border-radius: 0.3rem;
-    color: white;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .subscribe {
-    background-color: green;
-  }
-  
-  .unsubscribe {
-    background-color: red;
-  }
+
+ 
   
   time {
     font-weight: bold;
   }
   
+  img {
+    width: 400px;
+    height: 400px;
+  }
+
+  main {
+    display: flex;
+    width: auto;
+    
+  }

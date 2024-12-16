@@ -15,19 +15,19 @@
           
           <div class="columns">
             <div>
-              <p class="description">{{ tattoo.description }}</p>
+              <h3 class="description">{{ tattoo.description }}</h3>
               <p>
-                Date: <time>{{ tattoo._createdOn | elapsedTime }}</time>
+                <b>Uploaded: </b> <time>{{ tattoo._createdOn | elapsedTime }}</time>
               </p>
               <div class="nick-name">
                 <p>
-                  Username: <span>{{ tattoo.ownerName }}</span>
+                 <b>Tattooist: </b> <span>{{ tattoo.ownerName }}</span>
                 </p>
 
               </div>
               <div class="price">
                 <p>
-                  Price: <span>{{ tattoo.price }}</span>
+                 <b> Price: </b> <span>{{ tattoo.price }}</span>
                 </p>
 
               </div>
@@ -44,15 +44,20 @@
           }
         </div>
         <div class="subscribers">
-          @if (isLogged && !isTattooLikedByUser) {
-          <button class="subscribe" (click)="like(tattoo._id)">Like</button>
-          }
-          <p>
-            @if(isTattooLikedByUser){
-              <p>You have liked this tattoo.</p>
-              }
-            Likes: <span>{{this.likes}}</span>
+      
+          @if(isLogged && !isTattooLikedByUser){
+          <button class="button-like" (click)="like(tattoo._id)">
+            <i class="fa fa-heart"></i>
+            <span>Like</span>
+          </button>
+        }
+        <p>
+           @if(isTattooLikedByUser){
+            <p>You have liked this tattoo.</p>
+            }
+          Likes: <span>{{this.likes}}</span> 
           </p>
+       
 
           @if (comments.length > 0){
           @for (comment of comments; track $index) {
@@ -85,7 +90,7 @@
           } 
         } @else {
             <div class="no-comment">
-              <p class="comment">Be the first one to comment this tattoo!</p>
+              <p>No comments yet. Be the first one to comment this tattoo!</p>
             </div>
           }
         

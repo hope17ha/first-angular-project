@@ -1,6 +1,6 @@
 <header>
   <div class="wrapper">
-    <h1>Thunder's Tattoos!</h1>
+    <h1>Tattoos Mania!</h1>
     <p>... where nothing is impossible!</p>
   </div>
   <div class="mini-navbar-wrap">
@@ -26,15 +26,19 @@
   </div>
   <nav>
     <ul>
-      <li>
+      <li class="navigation">
         <a routerLink="/home">Home</a>
       </li>
-      <li>
+      <li class="navigation">
         <a routerLink="/tattoos">Tattoos</a>
       </li>
-      <li>
+      <li class="navigation">
+        @if (isLoggedIn){
         <a routerLink="/add-tattoo">New Tattoo</a>
+        }
       </li>
+
+
     </ul>
   </nav>
 </header>

@@ -25,37 +25,89 @@
     background-color: rgb(108, 164, 164);
     color: #234465;
     text-shadow: 1px 1px rgb(0, 0, 0);
+    text-align: center;
   }
   
   .tattoo-title {
-    padding: 0;
+    padding: 10px;
   }
   
   .tattoo-name {
     width: 100%;
     color: white;
+    text-align: center;
+    
+  }
+
+  .tattoo-name h2 {
+    font-size: 40px;
+    font-weight: 800;
+    color: #234465;
   }
   
   .columns {
     display: flex;
     justify-content: space-between;
     margin-top: 0.7rem;
+    flex-direction: column;
+  }
+
+  h3.description {
+    font-size: 30px;
+    font-weight: 800;
+    padding: 10px;
+}
+  p {
+    text-align: left;
+    margin:15px;
+    font-size: 20px;
+    color: #234465;
+  }
+
+
+  img {
+    height:650px;
+    width: 650px;
   }
   
   .subscribers {
-    text-align: right;
+    text-align: center;
     flex-basis: 25%;
   }
   
   .subscribers button {
-    padding: 0.3rem 0.7rem;
+    padding: 20px;
     border: none;
-    border-radius: 0.5rem;
-    color: white;
+    border-radius: 50px;
+    color: #234465;
     cursor: pointer;
-    width: 100%;
+    width: 20%;
+    margin: 20px;
   }
-  
+  .no-comment {
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+  }
+
+  .no-comment p {
+    text-align: center;
+    background-color: #234465;
+    padding: 12px;
+    color: white;
+    
+
+  }
+
+  .input-container {
+    height: 300px;
+}
+
+input#comment {
+    height: 290px;
+    width: 100%;
+}
   .subscribe {
     background-color: green;
   }
@@ -73,7 +125,22 @@
   }
   
   .tattoo-name h2 {
-    padding-top: 0;
+    padding: 20px;
+  }
+
+  .button-like {
+    border: 2px solid darkgray;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 1rem;
+    
+    vertical-align: middle;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 3rem;
+    color: darkgray;
+    transition: all ease 0.4s;
+    width: 50%;
   }
   
   /* comment */
@@ -82,10 +149,11 @@
     margin-top: 1em;
     border: 1px solid #999;
     border-radius: 0.5em;
-    width: 100%;
-    padding: 1em;
+    width: 50%;
+    padding: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
   }
   
   .comment header p {
@@ -109,7 +177,7 @@
   
   .userdetails p {
     padding-left: 0;
-    text-align: left;
+    text-align: center;
     color: #234465;
   }
   

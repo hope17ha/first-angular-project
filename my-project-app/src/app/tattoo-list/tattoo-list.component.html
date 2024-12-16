@@ -9,9 +9,9 @@
         <div class="tattoo-name">
           <a [routerLink]="tattoo._id" class="normal">
             <h2>{{ tattoo.type }}</h2>
-            <p class="description">{{ tattoo.description }}</p>
+            <!-- <p class="description">{{ tattoo.description }}</p> -->
               <p>
-            <!-- <img src="{{ tattoo.img }}" /> -->
+            <img src="{{ tattoo.img }}" />
           </a>
           <!-- <div class="columns">
             <div>
@@ -37,7 +37,7 @@
             </div>
            
           </div> -->
-          <a [routerLink]="tattoo._id" class="more-info-btn">More info</a>
+          <a [routerLink]="tattoo._id" class="more-info-btn">MORE INFO</a>
         </div>
       </div>
     </div>

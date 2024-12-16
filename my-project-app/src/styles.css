@@ -29,9 +29,14 @@ header {
   }
 
   body {
-    background-image: url('./images/1406.jpg');
+    /* background-image: url('./images/1406.jpg'); */
     height: 500px; 
     background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; 
+    background-image: 
+    linear-gradient(
+      rgba(35, 31, 31, 0.45), 
+      rgba(35, 31, 31, 0.45)
+      /* (108, 164, 164) */
+    ),url('./images/1406.jpg');
   }

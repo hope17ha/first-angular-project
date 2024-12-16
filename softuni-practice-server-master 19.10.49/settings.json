@@ -193,7 +193,7 @@
                     "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
                     "ownerName": "George",
                     "type": "The Mad Bunny",
-                    "img": "https://www.shutterstock.com/image-vector/vector-tattoo-creepy-bunny-260nw-84109870.jpg",
+                    "img": "https://i.pinimg.com/564x/9c/2c/f8/9c2cf8e50bad5ad7a80a1c5dd518bc34.jpg",
                     "description": "A quirky and edgy tattoo featuring an animated bunny with a mischievous grin, clutching a knife, blending cuteness with a dark twist.",
                     "price": "250 BGN",
                     "_createdOn": 1617194210928,
@@ -232,7 +232,20 @@
                     "comments": [],
                     "likes": [],
                     "_id": "136777f5-3277-42ad-b874-76d043b069cb"
+                },
+            "985d9eab-ad2e-4622-a5c8-116261fb1fd2": {
+                    "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                    "ownerName": "Ivanina",
+                    "type": "Yin-Yang Tigers",
+                    "img": "https://www.shutterstock.com/image-vector/vector-two-tigers-yin-yang-260nw-2190431501.jpg",
+                    "description": "The yin and yang is based on the notion that, despite their differences, represent immensely powerful energy.",
+                    "price": "250 BGN",
+                    "_createdOn": 1613551388703,
+                    "comments": [],
+                    "likes": [],
+                    "_id": "985d9eab-ad2e-4622-a5c8-116261fb1fd2"
                 }
+
             
         },
         "comments": {

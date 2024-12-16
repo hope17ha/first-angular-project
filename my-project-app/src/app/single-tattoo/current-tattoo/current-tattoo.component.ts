@@ -1,4 +1,4 @@
-import { Component, DestroyRef, NgModule, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { Tattoo } from '../../types/tattoo';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../api.service';
@@ -19,13 +19,12 @@ export class CurrentTattooComponent implements OnInit {
   tattoo = {} as Tattoo;
   comments: any = [];
   likes = 0;
-  user : User | null = null;
+  user: User | null = null;
 
   isOwner: boolean = false;
   isTattooLikedByUser: boolean = false;
   tattooId: string = '';
   isCreatingComment = false;
-
 
   get isLogged(): boolean {
     return this.userService.isLogged;
@@ -43,13 +42,16 @@ export class CurrentTattooComponent implements OnInit {
     return this.userService.user?.username || '';
   }
 
+
+      
+
   ngOnInit(): void {
     const id = this.route.snapshot.params['tattooId'];
     this.tattooId = id;
 
     const user = this.userService.user$.subscribe((user) => {
       this.user = user;
-    })
+    });
 
     const subscription = this.apiService
       .getSingleTattoo(id)
@@ -76,12 +78,16 @@ export class CurrentTattooComponent implements OnInit {
     });
   }
 
+
+
   like(id: string) {
     this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
-      const isTattooLikedByUser = Object.values(likes).some(
+      this.isTattooLikedByUser = Object.values(likes).some(
         (like) => like._ownerId === this.userService.user?._id
-      );
-      if (isTattooLikedByUser) {
+        );
+       
+
+      if (this.isTattooLikedByUser) {
         return;
       } else {
         this.apiService.likeTattoo(id).subscribe(() => {
@@ -89,9 +95,12 @@ export class CurrentTattooComponent implements OnInit {
             this.likes = Object.keys(likes).length;
           });
         });
+        this.isTattooLikedByUser = true;
+        
       }
     });
   }
+  
 
   delete() {
     const id = this.route.snapshot.params['tattooId'];
@@ -110,7 +119,6 @@ export class CurrentTattooComponent implements OnInit {
     this.isCreatingComment = !this.isCreatingComment;
   }
 
-
   addComment(form: NgForm) {
     if (form.invalid) {
       return;
@@ -127,16 +135,15 @@ export class CurrentTattooComponent implements OnInit {
   }
 
   deleteComment(commentId: string) {
-    const confirmation = confirm(`Do you want to delete this comment?`)
+    const confirmation = confirm(`Do you want to delete this comment?`);
     if (!confirmation) {
-        return;
+      return;
     }
 
     this.apiService.deleteComment(commentId).subscribe(() => {
       this.apiService.getCommentsById(this.tattooId).subscribe((comments) => {
         this.comments = comments;
       });
-
-    })
+    });
   }
 }
