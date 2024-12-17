@@ -7,14 +7,17 @@
         <!-- username -->
         <p class="field field-icon">
           <label for="username">Username</label>
-          <input
+          <input [class]="(
+            (inputUsername?.touched && inputUsername?.errors?.['required']) || 
+             (inputUsername?.touched && inputUsername?.errors?.['minlength']))
+             ? 'input-error': ''"
             type="text"
             id="username"
             name="username"
             #inputUsername="ngModel"
             ngModel
             required
-
+            minlength="5"
           />
         
     
@@ -26,12 +29,20 @@
               <p>Name is required.</p>
             </div>
             }
+            @if (inputUsername?.errors?.['minlength']){
+              <div class="error">
+                <p>Name must be at least 5 characters.</p>
+              </div>
+            }
           }
   
         <!-- email -->
         <p class="field field-icon">
           <label for="email">Email</label>
-      <input
+      <input [class]="(
+        (inputEmail?.touched && inputEmail?.errors?.['required']) || 
+         (inputEmail?.touched && inputEmail?.errors?.['emailValidator']))
+         ? 'input-error': ''"
         type="text"
         id="email"
         name="email"
@@ -62,7 +73,9 @@
           <!-- phone -->
     <p class="field field-icon">
       <label for="tel">Phone</label>
-      <input
+      <input [class]="(
+        (inputTel?.touched && inputTel?.errors?.['required']))
+         ? 'input-error': ''"
         type="text"
         id="tel"
         name="tel"
@@ -88,7 +101,10 @@
           <!-- password -->
           <p class="field field-icon">
             <label for="password">Password</label>
-            <input
+            <input      [class]="(
+              (passwordInput?.touched && passwordInput?.errors?.['required']) || 
+               (passwordInput?.touched && passwordInput?.errors?.['minlength']))
+               ? 'input-error': ''"
               type="password"
               id="password"
               name="password"
@@ -118,7 +134,11 @@
           <!-- rePassword -->
           <p class="field field-icon">
             <label for="rePassword">Confirm Password</label>
-            <input
+            <input [class]="(
+              (rePasswordInput?.touched && rePasswordInput?.errors?.['required']) || 
+               (rePasswordInput?.touched && rePasswordInput?.errors?.['minlength']) ||
+               rePasswordInput?.touched && rePasswordInput?.errors?.['passwordsDontMatch'])
+               ? 'input-error': ''"
               type="password"
               id="rePassword"
               name="rePassword"
@@ -150,7 +170,9 @@
           
 
   
-        <button
+   
+      </fieldset>
+           <button
           [disabled]="registerForm.invalid"
           [style]="{ backgroundColor: registerForm.invalid ? 'grey' : '#234465' }"
         >
@@ -161,7 +183,7 @@
           Have an account?
           <a routerLink="/login">Log In</a>
         </p>
-      </fieldset>
     </form>
+    
   </div>
   

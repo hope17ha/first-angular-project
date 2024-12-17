@@ -109,7 +109,7 @@ form.register {
   margin-left: 0.5em;
 }
 
-p.error {
+.error p {
   text-align: left;
   border-radius: 0.5em;
   color: red !important;

@@ -70,6 +70,7 @@ export class ProfileComponent implements OnInit {
     this.userService.updateProfile(username, email, tel).subscribe(() => {
       this.userService.user = this.form.value as User;
       this.toggleEditMode();
+      console.log(this.userService.user)
     });
     this.router.navigate(['/profile'])
   }

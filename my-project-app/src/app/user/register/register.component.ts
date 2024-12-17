@@ -47,16 +47,10 @@ export class RegisterComponent {
 
     this.userService
       .register(username, email, tel, password, rePassword)
-      .subscribe({
-        next: (user) => {
-          this.errorMessage = '';
-
-          this.router.navigate(['/home']);
-        },
-        error:(err) => {
-          
-          this.errorMessage = err.error?.message
-        }
-      })
+      .subscribe((data) => {
+        const token = data.accessToken;
+        localStorage.setItem('X-Authorization', token);
+        this.router.navigate(['/home']);
+      });
   }
 }

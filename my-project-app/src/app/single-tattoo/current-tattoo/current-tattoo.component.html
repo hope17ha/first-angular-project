@@ -9,6 +9,17 @@
     <div class="tattoo-title">
       <div class="tattoo-name-wrapper">
         <div class="tattoo-name">
+          <div class="buttons">
+            @if (isLogged && isOwner) {
+            <button
+              routerLink="/tattoos/edit/{{ tattoo._id }}"
+              class="btn btn-edit"
+            >
+              Edit
+            </button>
+            <button class="btn btn-del" (click)="delete()">Delete</button>
+            }
+          </div>
          
             <h2>{{ tattoo.type }}</h2>
             <img src="{{ tattoo.img }}" />
@@ -32,17 +43,7 @@
 
               </div>
 
-        <div class="buttons">
-          @if (isLogged && isOwner) {
-          <button
-            routerLink="/tattoos/edit/{{ tattoo._id }}"
-            class="btn btn-edit"
-          >
-            Edit
-          </button>
-          <button class="btn btn-del" (click)="delete()">Delete</button>
-          }
-        </div>
+       
         <div class="subscribers">
       
           @if(isLogged && !isTattooLikedByUser){
@@ -70,14 +71,16 @@
 
               </header>
               @if(user?._id === comment._ownerId){
-                <div class="delete">
+                <div>
 
-                    <button type="button" (click)="deleteComment(comment._id)">Delete comment</button>
+                    <button class="delete" type="button" (click)="deleteComment(comment._id)">
+                      <i class="fa fa-trash"></i>
+                      <span>Delete comment</span></button>
                 </div>
             }
               <div class="comment-main">
                 <div class="userdetails">
-                  <img src="./profile.png" alt="avatar" />
+                  <img src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg" alt="avatar" />
                 </div>
                 <div class="post-content">
                   <p>
@@ -102,31 +105,43 @@
               <div class="answer">
                 <form #form="ngForm" (ngSubmit)="addComment(form)">
                   <div class="input-container">
-                      <input 
+                    <!-- <textarea name="postText" id="comment" cols="30" rows="10"></textarea> -->
+                      <input
                           type="text" 
                           id="comment" 
                           name="comment"
                           placeholder="Add your comment here"
                           ngModel
                           #inputComment="ngModel"
-                          maxlength="100"
+                          maxlength="120"
                           minlength="1"
                           required
-                          cols="30"
-                          rows="10"
+                      
                           />
                   </div>
                   </form>
-                  <button class="post" (click)="addComment(form)">Post</button>
+                  @if(inputComment?.touched){
+                    <div>
+                      @if(inputComment?.errors?.['required']){
+                      <p class="error">The field with the comment is required.</p>
+                      }
+
+                    </div>
+                  }
+                
+                  <button class="post"          class="public"
+                  [disabled]="form.invalid"
+                  [style]="{ backgroundColor: form.invalid ? 'grey' : '#234465' }" (click)="addComment(form)">Post</button>
+                  <button type="button" class="cancel" (click)="addCommentToggle()">Cancel</button>
               </div>
             </div>
             }
-          
+        
   
-            @if (isLogged) {
+            @if (isLogged && !isCreatingComment) {
               <div class="bts-container">
                   <button (click)="addCommentToggle()">Add comment</button>
-                  <button type="button" class="cancel" (click)="addCommentToggle()">Cancel</button>
+                  
               </div>
           }
         

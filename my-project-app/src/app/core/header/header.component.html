@@ -1,7 +1,7 @@
 <header>
   <div class="wrapper">
     <h1>Tattoos Mania!</h1>
-    <p>... where nothing is impossible!</p>
+    <p>... home of the city of Sofia's best tattoos!</p>
   </div>
   <div class="mini-navbar-wrap">
     <div class="mini-navbar">
@@ -32,11 +32,13 @@
       <li class="navigation">
         <a routerLink="/tattoos">Tattoos</a>
       </li>
+      @if (isLoggedIn){
       <li class="navigation">
-        @if (isLoggedIn){
+      
         <a routerLink="/add-tattoo">New Tattoo</a>
-        }
+        
       </li>
+    }
 
 
     </ul>

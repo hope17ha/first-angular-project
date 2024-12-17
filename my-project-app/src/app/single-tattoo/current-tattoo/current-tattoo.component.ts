@@ -42,9 +42,6 @@ export class CurrentTattooComponent implements OnInit {
     return this.userService.user?.username || '';
   }
 
-
-      
-
   ngOnInit(): void {
     const id = this.route.snapshot.params['tattooId'];
     this.tattooId = id;
@@ -52,6 +49,16 @@ export class CurrentTattooComponent implements OnInit {
     const user = this.userService.user$.subscribe((user) => {
       this.user = user;
     });
+
+    const likesTattoo = this.apiService
+      .getLikesOnTattoo(this.tattooId)
+      .subscribe((likes) => {
+        this.isTattooLikedByUser = Object.values(likes).some((like) =>
+          like._ownerId === this.userService.user?._id
+            ? (this.isTattooLikedByUser = true)
+            : (this.isTattooLikedByUser = false)
+        );
+      });
 
     const subscription = this.apiService
       .getSingleTattoo(id)
@@ -78,14 +85,11 @@ export class CurrentTattooComponent implements OnInit {
     });
   }
 
-
-
   like(id: string) {
     this.apiService.getLikesOnTattoo(id).subscribe((likes) => {
       this.isTattooLikedByUser = Object.values(likes).some(
         (like) => like._ownerId === this.userService.user?._id
-        );
-       
+      );
 
       if (this.isTattooLikedByUser) {
         return;
@@ -96,11 +100,9 @@ export class CurrentTattooComponent implements OnInit {
           });
         });
         this.isTattooLikedByUser = true;
-        
       }
     });
   }
-  
 
   delete() {
     const id = this.route.snapshot.params['tattooId'];

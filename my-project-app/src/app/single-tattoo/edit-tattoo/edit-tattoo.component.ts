@@ -6,11 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Tattoo } from '../../types/tattoo';
 import { ImageUrlValidationDirective } from '../../directives/image-validation.directive';
+import { PriceValidationDirective } from '../../directives/price-validation.directive';
 
 @Component({
   selector: 'app-edit-tattoo',
   standalone: true,
-  imports: [FormsModule, ImageUrlValidationDirective],
+  imports: [FormsModule, ImageUrlValidationDirective, PriceValidationDirective],
   templateUrl: './edit-tattoo.component.html',
   styleUrl: './edit-tattoo.component.css',
 })

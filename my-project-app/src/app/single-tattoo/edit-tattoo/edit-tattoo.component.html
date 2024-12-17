@@ -17,6 +17,18 @@
             required
             minlength="5"
           />
+
+          @if(inputType?.touched){
+            <div>
+              @if(inputType?.errors?.['required']){
+              <p class="error">Tattoo name is required.</p>
+              }
+              <!---->
+              @if(inputType?.errors?.['minlength']){
+              <p class="error">Tattoo name must be at least 5 characters long.</p>
+              }
+            </div>
+            }
           <label for="img">Image URL <span class="red">*</span></label>
           <input
             type="url"
@@ -28,6 +40,23 @@
             minlength="5"
             appImageValidation
           />
+          @if(inputImg?.touched){
+            <div>
+              @if(inputImg?.errors?.['required']){
+              <p class="error">The field with your image URL is required.</p>
+              }
+              <!---->
+              @if(inputImg?.errors?.['minlength']){
+              <p class="error">Image URL must be at least 10 characters long.</p>
+              }
+            </div>
+            @if(inputImg?.errors?.['imageValidator']){
+              <p class="error">
+                Image URL is invalid.
+              </p>
+              }
+          
+          }
 
           <label for="price">Price <span class="red">*</span></label>
           <input
@@ -37,6 +66,7 @@
             ngModel
             #inputPrice="ngModel"
             required
+            appPriceValidation
           
           />
           @if(inputPrice?.touched){
@@ -45,21 +75,15 @@
               <p class="error">The field with the price is required.</p>
               }
               <!---->
+              @if(inputPrice?.errors?.['priceValidator']){
+                <p class="error">
+                  Price is invalid, must be a BGN currency.
+                </p>
+                }
            
             </div>
           }
   
-          @if(inputType?.touched){
-          <div>
-            @if(inputType?.errors?.['required']){
-            <p class="error">Tattoo name is required.</p>
-            }
-            <!---->
-            @if(inputType?.errors?.['minlength']){
-            <p class="error">Tattoo name must be at least 5 characters long.</p>
-            }
-          </div>
-          }
         </div>
         <div class="new-tattoo-content">
           <label for="description">Description <span class="red">*</span></label>
@@ -87,23 +111,7 @@
             }
           </div>
         }
-          @if(inputImg?.touched){
-            <div>
-              @if(inputImg?.errors?.['required']){
-              <p class="error">The field with your image URL is required.</p>
-              }
-              <!---->
-              @if(inputImg?.errors?.['minlength']){
-              <p class="error">Image URL must be at least 10 characters long.</p>
-              }
-            </div>
-            @if(inputImg?.errors?.['imageValidator']){
-              <p class="error">
-                Image URL is invalid.
-              </p>
-              }
-          
-          }
+     
         
         <div class="new-tattoo-buttons">
           <button class="cancel">Cancel</button>
