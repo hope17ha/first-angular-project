@@ -53,32 +53,5 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  toggleEditMode() {
-    this.isEditMode = !this.isEditMode;
-  }
-
-  handleSaveProfile() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    this.profileDetails = this.form.value as ProfileDetails;
-    
-
-    const { username, email, tel } = this.profileDetails;
-
-    this.userService.updateProfile(username, email, tel).subscribe(() => {
-      this.userService.user = this.form.value as User;
-      this.toggleEditMode();
-      console.log(this.userService.user)
-    });
-    this.router.navigate(['/profile'])
-  }
-      
-  
-
-  onCancel(event: Event) {
-    event.preventDefault();
-    this.toggleEditMode();
-  }
+ 
 }
